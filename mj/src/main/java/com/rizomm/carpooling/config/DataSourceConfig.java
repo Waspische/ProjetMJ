@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 //informer que le bean sert à la configuration de spring
 @Configuration	 
@@ -29,4 +31,5 @@ public class DataSourceConfig {
 		dataSource.setPassword(env.getProperty("jdbc.password"));    	
 		return dataSource;
 	}
+	
 }

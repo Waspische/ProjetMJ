@@ -44,7 +44,7 @@ public class AppTest {
 		
 		Thread.sleep(5000);
 		
-		System.out.println("Récupération et mise à jour du membre");
+		System.out.println("Rï¿½cupï¿½ration et mise ï¿½ jour du membre");
 		
 		Membre membreRecup = membreService.findMembreById(1);
 		
@@ -62,7 +62,7 @@ public class AppTest {
 		
 		Thread.sleep(5000);
 
-		/* mise à jour de la reservation */
+		/* mise ï¿½ jour de la reservation */
 		java.util.Set<Reservation> reservationsForMaj = membreService.findMembreById(1).getReservations();
 		
 		for(Reservation r : reservationsForMaj) {

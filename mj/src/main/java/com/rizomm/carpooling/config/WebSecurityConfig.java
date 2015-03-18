@@ -18,21 +18,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 	
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication()
+		.dataSource(dataSource)
+		.usersByUsernameQuery(
+		"Select login, password, true as enbled from utilisateur where login=?")
+		.authoritiesByUsernameQuery(
+		"Select u.login, r.libelle From role r join utilisateur u on u.rol_id=r.id where u.login=?");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers("/views/membres/**").access("hasRole('ROLE_ADMIN')")
-		.and().formLogin();
-	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web
-		.ignoring()
-		.antMatchers("/resources/**");
+		.antMatchers("/views/**").access("hasRole('ROLE_USER')")
+		.and()
+		  .formLogin().loginProcessingUrl("/j_spring_security_check")
+		  .loginPage("/login").failureUrl("/login?error")
+		  .defaultSuccessUrl("/views/hello")
+		  .usernameParameter("username").passwordParameter("password")
+		.and()
+		  .logout().logoutSuccessUrl("/login?logout")
+		.and()
+		  .exceptionHandling().accessDeniedPage("/403")
+		.and()
+		  .csrf();
 	}
 }

@@ -47,7 +47,7 @@ public class Membre implements Serializable {
 	@Size(max=80, message="max 80 (prenom)")
 	private String prenomMembre;
 	
-	@OneToMany(targetEntity=com.rizomm.carpooling.model.Reservation.class)	
+	@OneToMany(targetEntity=Reservation.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="MembreID", nullable=false) })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.FALSE)	
