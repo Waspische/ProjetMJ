@@ -1,8 +1,7 @@
-<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,21 +22,21 @@
 
 		<c:if test="${not empty error}">
 			<div class="error">${error}</div>
-		 </c:if>
+		</c:if>
 
-		<form modelAttribute="utilisateurForm" class="ui form" method="post" style="max-width: 600px">
-
+		<form:form modelAttribute="utilisateurForm" class="ui form" method="post" style="max-width: 600px">
+			
 			<div class="two fields">
 				<div class="field">
 					<label>Nom</label>
 					<div class="ui icon input">
-						<input cssStyle="input" type="text"  placeholder="Nom" path="nom">
+						<form:input type="text" placeholder="Nom" path="nom"/>
 					</div>
 				</div>
 				<div class="field">
 					<label>Prénom</label>
 					<div class="ui icon input">
-						<input type="text"  placeholder="Prénom" path="prenom">
+						<form:input type="text"  placeholder="Prénom" path="prenom"/>
 					</div>
 				</div>
 			</div>
@@ -46,8 +45,7 @@
 			<div class="required field">
 				<label>Login</label>
 				<div class="ui icon input">
-					<input type="text"  placeholder="Login" path="login">
-					<form:errors path="login" element="div"/>
+					<form:input type="text"  placeholder="Login" path="login"/>
 				</div>
 			</div>
 
@@ -55,17 +53,15 @@
 				<div class="required field">
 					<label>Mot de passe</label>
 					<div class="ui icon input">
-						<input type="password"  placeholder="Mot de passe" path="password">
+						<form:input type="password"  placeholder="Mot de passe" path="password"/>
 					</div>
-					<form:errors path="password" element="div"/>
 				</div>
 
 				<div class="required field">
 					<label>Confirmation</label>
 					<div class="ui icon input">
-						<input type="password"  placeholder="Confirmation" path="confirmation">
+						<form:input type="password"  placeholder="Confirmation" path="confirmation"/>
 					</div>
-					<form:errors path="confirmation" element="div"/>
 				</div>
 			</div>
 
@@ -73,20 +69,20 @@
 			<div class="field">
 				<label>Email</label>
 				<div class="ui icon input" >
-					<input type="text" placeholder="Email" path="email">
+					<form:input type="text" placeholder="Email" path="email"/>
 				</div>
 			</div>
 
 			<div class="field">
 				<label>Numéro de téléphone</label>
 				<div class="ui icon input">
-					<input type="text"  placeholder="Téléphone" path="telephone">
+					<form:input type="text"  placeholder="Téléphone" path="telephone"/>
 				</div>
 			</div>
 
 
 			<button style="margin-top:30px" class="ui green button" type="submit">Creer un compte</button>
-		</form>
+		</form:form>
 		<form style="margin-top:50px" action="<c:url value='/login'/>" method="get">
 		 	<button class="ui red button" type="submit">
 		    	<i class="reply icon"></i>

@@ -17,7 +17,7 @@ public class UtilisateurValidator implements Validator {
 		UtilisateurForm utilisateurForm = (UtilisateurForm) obj;
 		if(!utilisateurForm.getPassword().equals(utilisateurForm.getConfirmation()))
 		{
-			e.rejectValue("confirmation", "La confirmation n'est pas validée");
+			e.rejectValue("confirmation", "erreur.confirmation", new String[]{"confirmation"}, "La confirmation n'est pas validée");
 		}
 	}
 

@@ -1,7 +1,5 @@
 package com.rizomm.carpooling.form;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class UtilisateurForm {
@@ -9,15 +7,12 @@ public class UtilisateurForm {
 	private String nom;
 	private String prenom;
 	
-	@NotNull
 	@NotEmpty
 	private String login;
 	
-	@NotNull
 	@NotEmpty
 	private String password;
 	
-	@NotNull
 	@NotEmpty
 	private String confirmation;
 	

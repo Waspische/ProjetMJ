@@ -20,6 +20,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name = "UtilisateurByLogin", query = "from Utilisateur u where u.login = :login")
+})
 @Entity
 @Table(name = "utilisateur")
 public class Utilisateur {

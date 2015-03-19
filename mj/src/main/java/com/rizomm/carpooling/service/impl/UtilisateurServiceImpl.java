@@ -19,4 +19,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public Utilisateur saveUtilisateur(Utilisateur utilisateur) {
 		return utilisateurDAO.save(utilisateur);
 	}
+
+	@Override
+	@Transactional
+	public Utilisateur getUtilisateurByLogin(Utilisateur utilisateur) {
+		return utilisateurDAO.getUtilisateurByLogin(utilisateur);
+	}
 }
