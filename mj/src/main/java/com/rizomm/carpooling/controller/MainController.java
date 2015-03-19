@@ -18,6 +18,12 @@ public class MainController {
 		
 	  ModelAndView model = new ModelAndView();
 	  
+	  //check if user is login
+	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	  if (!(auth instanceof AnonymousAuthenticationToken)) {
+		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
+		model.addObject("username", userDetail.getUsername());
+	  }
 	  model.setViewName("/views/hello");
 	  
 	  return model;
@@ -26,7 +32,8 @@ public class MainController {
  
 	@RequestMapping(value = {"/","/login"}, method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-		@RequestParam(value = "logout", required = false) String logout) {
+		@RequestParam(value = "logout", required = false) String logout,
+		@RequestParam(value = "create", required = false) String create) {
  
 	  ModelAndView model = new ModelAndView();
 	  
@@ -35,6 +42,9 @@ public class MainController {
 	  }
 	  if (logout != null) {
 		model.addObject("msg", "Vous êtes maintenant déconnecté.");
+	  }
+	  if (create != null) {
+		model.addObject("create", create);
 	  }
 	  
 	  model.setViewName("/login");

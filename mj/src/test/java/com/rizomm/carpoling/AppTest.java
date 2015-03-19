@@ -1,34 +1,25 @@
 package com.rizomm.carpoling;
 
-import java.util.List;
-
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.rizomm.carpooling.model.Membre;
-import com.rizomm.carpooling.model.Reservation;
-import com.rizomm.carpooling.service.MembreService;
-import com.rizomm.carpooling.service.ReservationService;
 
 public class AppTest {
 
 
 	public static void main(String[] args) throws InterruptedException {
-
-		/* chargement du fichier de contexte */
+/*
+		// chargement du fichier de contexte 
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 				"applicationContext.xml");
 
-		/* service */
+		// service 
 		MembreService membreService = (MembreService) context.getBean("membreService");
 		ReservationService reservationService = (ReservationService) context.getBean("reservationService");
 		
-		/* instanciation d'un objet Membre */
+		// instanciation d'un objet Membre 
 		Membre membre = new Membre();
 		membre.setNomMembre("BON");	
 		membre.setPrenomMembre("JEAN");
 
-		/* instanciation d'un objet reservation */
+		// instanciation d'un objet reservation 
 		Reservation reservation = new Reservation();
 		reservation.setDateReservation("2016-01-05");
 
@@ -37,7 +28,7 @@ public class AppTest {
 		
 		membre.setReservations(reservations);
 
-		/* creation du membre */
+		// creation du membre 
 		membreService.saveMembre(membre);
 
 		System.out.println("creation du membre");
@@ -51,7 +42,7 @@ public class AppTest {
 		membreRecup.setNomMembre("JEAN");
 		membreRecup.setPrenomMembre("BON");
 
-		/* sauvegarde du membre */
+		// sauvegarde du membre 
 		membreService.updateMembre(membreRecup);
 
 		System.out.println("Sauvegarde du membre");
@@ -62,7 +53,7 @@ public class AppTest {
 		
 		Thread.sleep(5000);
 
-		/* mise � jour de la reservation */
+		// mise � jour de la reservation 
 		java.util.Set<Reservation> reservationsForMaj = membreService.findMembreById(1).getReservations();
 		
 		for(Reservation r : reservationsForMaj) {
@@ -84,6 +75,7 @@ public class AppTest {
 		membreService.deleteMembre(membre);
 		
 		context.close();
+		*/
 	}
 
 }
