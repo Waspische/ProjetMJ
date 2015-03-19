@@ -15,6 +15,26 @@
             Accordion
 *******************************/
 
+.error {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+ 
+.msg {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+
 .ui.accordion,
 .ui.accordion .accordion {
   max-width: 100%;
@@ -8120,7 +8140,7 @@ i.flag.zimbabwe:before {
 .ui.form input[type="password"],
 .ui.form input[type="number"],
 .ui.form input[type="url"],
-.ui.form input[type="tel"] {
+.ui.form input[type="tel"]{
   margin: 0em;
   outline: none;
   -webkit-appearance: none;
@@ -10719,6 +10739,7 @@ a.ui.inverted.yellow.header:hover {
 .ui.centered.header,
 .ui.center.aligned.header {
   text-align: center;
+  padding-top:20px;
 }
 
 .ui.justified.header {
