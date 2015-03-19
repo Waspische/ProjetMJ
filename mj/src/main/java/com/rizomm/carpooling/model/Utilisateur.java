@@ -34,6 +34,10 @@ public class Utilisateur {
  private String login;
  private String password;
  private int rolId;
+ private String nom;
+ private String prenom;
+ private String email;
+ private String telephone;
 
  public Utilisateur() {
  }
@@ -43,6 +47,16 @@ public class Utilisateur {
   this.password = password;
   this.rolId = rolId;
  }
+ 
+ public Utilisateur(String login, String password, int rolId, String nom, String prenom, String email, String telephone) {
+	  this.login = login;
+	  this.password = password;
+	  this.rolId = rolId;
+	  this.nom = nom;
+	  this.prenom = prenom;
+	  this.email = email;
+	  this.telephone = telephone;
+	 }
 
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,5 +95,39 @@ public class Utilisateur {
  public void setRolId(int rolId) {
   this.rolId = rolId;
  }
+
+public String getNom() {
+	return nom;
+}
+
+public void setNom(String nom) {
+	this.nom = nom;
+}
+
+public String getPrenom() {
+	return prenom;
+}
+
+public void setPrenom(String prenom) {
+	this.prenom = prenom;
+}
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
+
+public String getTelephone() {
+	return telephone;
+}
+
+public void setTelephone(String telephone) {
+	this.telephone = telephone;
+}
+ 
+ 
 
 }

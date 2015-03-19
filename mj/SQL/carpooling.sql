@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 19 Mars 2015 à 15:22
+-- Généré le: Jeu 19 Mars 2015 à 20:23
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données: `carpooling`
@@ -28,6 +22,7 @@ USE `carpooling`;
 -- Structure de la table `document`
 --
 
+DROP TABLE IF EXISTS `document`;
 CREATE TABLE IF NOT EXISTS `document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(255) NOT NULL,
@@ -42,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `document` (
 -- Structure de la table `document_legal`
 --
 
+DROP TABLE IF EXISTS `document_legal`;
 CREATE TABLE IF NOT EXISTS `document_legal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_utilisateur` int(11) NOT NULL,
@@ -54,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `document_legal` (
 -- Structure de la table `etape`
 --
 
+DROP TABLE IF EXISTS `etape`;
 CREATE TABLE IF NOT EXISTS `etape` (
   `id` int(11) NOT NULL,
   `ordre` int(11) NOT NULL,
@@ -63,22 +60,10 @@ CREATE TABLE IF NOT EXISTS `etape` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `membre`
---
-
-CREATE TABLE IF NOT EXISTS `membre` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(80) DEFAULT NULL,
-  `PrenomMembre` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `notation`
 --
 
+DROP TABLE IF EXISTS `notation`;
 CREATE TABLE IF NOT EXISTS `notation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `note` int(11) NOT NULL,
@@ -93,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `notation` (
 -- Structure de la table `passager`
 --
 
+DROP TABLE IF EXISTS `passager`;
 CREATE TABLE IF NOT EXISTS `passager` (
   `id` int(11) NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
@@ -107,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `passager` (
 -- Structure de la table `pays`
 --
 
+DROP TABLE IF EXISTS `pays`;
 CREATE TABLE IF NOT EXISTS `pays` (
   `id` int(11) NOT NULL,
   `libelle` varchar(100) NOT NULL,
@@ -119,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `pays` (
 -- Structure de la table `preferences`
 --
 
+DROP TABLE IF EXISTS `preferences`;
 CREATE TABLE IF NOT EXISTS `preferences` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fumeur` int(1) NOT NULL,
@@ -132,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `preferences` (
 -- Structure de la table `reservation`
 --
 
+DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE IF NOT EXISTS `reservation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date_reservation` varchar(255) DEFAULT NULL,
@@ -146,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 -- Structure de la table `role`
 --
 
+DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(30) NOT NULL,
@@ -166,6 +156,7 @@ INSERT INTO `role` (`id`, `libelle`) VALUES
 -- Structure de la table `trajet`
 --
 
+DROP TABLE IF EXISTS `trajet`;
 CREATE TABLE IF NOT EXISTS `trajet` (
   `id` int(11) NOT NULL,
   `conducteur` int(11) NOT NULL,
@@ -183,6 +174,7 @@ CREATE TABLE IF NOT EXISTS `trajet` (
 -- Structure de la table `type_voiture`
 --
 
+DROP TABLE IF EXISTS `type_voiture`;
 CREATE TABLE IF NOT EXISTS `type_voiture` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) NOT NULL,
@@ -195,21 +187,26 @@ CREATE TABLE IF NOT EXISTS `type_voiture` (
 -- Structure de la table `utilisateur`
 --
 
+DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `rol_id` int(11) NOT NULL,
+  `nom` varchar(80) DEFAULT NULL,
+  `prenom` varchar(80) DEFAULT NULL,
+  `email` varchar(80) DEFAULT NULL,
+  `telephone` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Table des utilisateurs' AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Table des utilisateurs' AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id`, `login`, `password`, `rol_id`) VALUES
-(1, 'admin', 'admin', 1),
-(2, 'user', 'user', 2);
+INSERT INTO `utilisateur` (`id`, `login`, `password`, `rol_id`, `nom`, `prenom`, `email`, `telephone`) VALUES
+(1, 'admin', 'admin', 1, '', '', '', ''),
+(2, 'user', 'user', 2, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -217,6 +214,7 @@ INSERT INTO `utilisateur` (`id`, `login`, `password`, `rol_id`) VALUES
 -- Structure de la table `ville`
 --
 
+DROP TABLE IF EXISTS `ville`;
 CREATE TABLE IF NOT EXISTS `ville` (
   `id` int(11) NOT NULL,
   `id_pays` int(11) NOT NULL,
@@ -231,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `ville` (
 -- Structure de la table `voiture`
 --
 
+DROP TABLE IF EXISTS `voiture`;
 CREATE TABLE IF NOT EXISTS `voiture` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `constructeur` varchar(100) NOT NULL,
@@ -246,8 +245,4 @@ CREATE TABLE IF NOT EXISTS `voiture` (
 -- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `FK_6j32anxj9k6jhjhprkysk6wxm` FOREIGN KEY (`id_utilisateur`) REFERENCES `membre` (`ID`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  ADD CONSTRAINT `FK_6j32anxj9k6jhjhprkysk6wxm` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`);

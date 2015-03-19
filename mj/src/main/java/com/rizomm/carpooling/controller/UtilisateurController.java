@@ -50,7 +50,9 @@ public class UtilisateurController {
 	  utilisateurValidator.validate(utilisateurForm, result);
 	  
 	  if (!result.hasErrors()) {
-		  Utilisateur uti = new Utilisateur(utilisateurForm.getLogin(), utilisateurForm.getPassword(), 2);
+		  Utilisateur uti = new Utilisateur(utilisateurForm.getLogin(), utilisateurForm.getPassword(), 2,
+				  							utilisateurForm.getNom(), utilisateurForm.getPrenom(), 
+				  							utilisateurForm.getEmail(), utilisateurForm.getTelephone());
 		  if(utilisateurService.getUtilisateurByLogin(uti)==null)
 		  {
 			  uti = utilisateurService.saveUtilisateur(uti);

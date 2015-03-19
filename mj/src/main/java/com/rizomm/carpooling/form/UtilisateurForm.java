@@ -1,23 +1,32 @@
 package com.rizomm.carpooling.form;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class UtilisateurForm {
 
+	@Length(max=80)
 	private String nom;
+	
+	@Length(max=80)
 	private String prenom;
 	
 	@NotEmpty
+	@Length(max=30)
 	private String login;
 	
 	@NotEmpty
+	@Length(max=30)
 	private String password;
 	
 	@NotEmpty
+	@Length(max=30)
 	private String confirmation;
 	
+	@Length(max=80)
 	private String email;
 	
+	@Length(max=10)
 	private String telephone;
 
 	public String getNom() {
