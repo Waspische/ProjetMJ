@@ -14,7 +14,10 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.rizomm.carpooling.model.Trajet;
+import com.rizomm.carpooling.model.TypeVoiture;
 import com.rizomm.carpooling.model.Utilisateur;
+import com.rizomm.carpooling.model.Ville;
 
 //informer que le bean sert à la configuration de spring
 @Configuration
@@ -43,6 +46,9 @@ public class HibernateConfig {
 		sessionBuilder.addProperties(getHibernateProperties());
 		// ajouter les dépendances aux classes persistantes
 		sessionBuilder.addAnnotatedClasses(Utilisateur.class);
+		sessionBuilder.addAnnotatedClasses(TypeVoiture.class);
+		sessionBuilder.addAnnotatedClasses(Ville.class);
+		sessionBuilder.addAnnotatedClasses(Trajet.class);
 		return sessionBuilder.buildSessionFactory();
 	}
 

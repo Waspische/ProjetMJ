@@ -21,13 +21,18 @@
 	 <div style="float:right; margin-top:-50px; margin-right:20px">
 	 	<i style="display:inline" class="user icon">  <b>${username}</b></i>
 	 	<br/>
-	 	<a href="<c:url value='/login?logout'/>">Se déconnecter</a>
+		<a href="<c:url value="/j_spring_security_logout"/>">Se déconnecter</a>
 	 </div>
 	 
      <div class="container">
-		 <form class="ui form">
+     
+		 <c:if test="${not empty create}">
+			<div class="msg">${create}</div>
+		 </c:if>
+     
+		 <form class="ui form" action="<c:url value='/views/nouveau_trajet'/>">
 		 <div id="top">
-			 <button class="ui purple button">Creer un trajet</button>
+			 <button class="ui purple button" type="submit">Creer un trajet</button>
 	     </div>
 	     </form>
 	     <br/>

@@ -41,6 +41,11 @@ public class MainController {
 		model.addObject("error", "Mauvais login et mot de passe !");
 	  }
 	  if (logout != null) {
+		//check if user is login
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (!(auth instanceof AnonymousAuthenticationToken)) {
+	    	
+	    }
 		model.addObject("msg", "Vous êtes maintenant déconnecté.");
 	  }
 	  if (create != null) {
