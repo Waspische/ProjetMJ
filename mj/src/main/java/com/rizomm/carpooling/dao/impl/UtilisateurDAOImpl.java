@@ -28,9 +28,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur getUtilisateurByLogin(Utilisateur utilisateur) {
+	public Utilisateur getUtilisateurByLogin(String utilisateur) {
 		Query query = sessionFactory.getCurrentSession().getNamedQuery("UtilisateurByLogin");
-		query.setString("login", utilisateur.getLogin());
+		query.setString("login", utilisateur);
 		if(query.list().size()>0)
 			return (Utilisateur) query.list().get(0);
 		else

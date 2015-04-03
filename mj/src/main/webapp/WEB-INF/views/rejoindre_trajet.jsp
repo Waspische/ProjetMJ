@@ -31,7 +31,10 @@
 		 
 		 <c:if test="${not empty error}">
 			<div class="error">${error}</div>
-		</c:if>
+		 </c:if>
+		 <c:if test="${not empty create}">
+			<div class="msg">${create}</div>
+		 </c:if>
 		 
 		 <form:form modelAttribute="reservationForm" class="ui form" method="post" style="max-width: 600px">
 		    <table>
@@ -40,7 +43,7 @@
 		    	<div class="field" style="margin:0 2px 0 2px">
 					<label>Ville de départ</label>
 					<div class="ui icon input">
-						<form:input type="text" placeholder="Ville de départ" path="pointDepart"/>
+						<form:input type="text" placeholder="Ville de départ" path="rechercheForm.pointDepart"/>
 				  	</div>
 				</div>
 			</td>
@@ -48,7 +51,7 @@
 			   	<div class="field" style="margin:0 2px 0 2px">
 				  	<label>Ville d'arrivée</label>
 				  	<div class="ui icon input">
-						<form:input type="text" placeholder="Ville d'arrivée" path="pointArrivee"/>
+						<form:input type="text" placeholder="Ville d'arrivée" path="rechercheForm.pointArrivee"/>
 				  	</div>
 				</div>
 			</td>
@@ -56,7 +59,7 @@
 			   	<div class="field" style="margin:0 2px 0 2px">
 				  	<label>Date de depart</label>
 				  	<div class="ui icon input">
-						<form:input type="text" placeholder="DD/MM/YYYY" path="dateDepart"/>
+						<form:input type="text" placeholder="DD/MM/YYYY" path="rechercheForm.dateDepart"/>
 				  	</div>
 				</div>	
 			</td>
@@ -64,7 +67,7 @@
 			   	<div class="field" style="margin:0 2px 0 2px">
 				  	<label>Places disponibles</label>
 				  	<div class="ui icon input">
-						<form:checkbox style="width:20px;height:20px;" path="placesDispo"/>
+						<form:checkbox style="width:20px;height:20px;" path="rechercheForm.placesDispo"/>
 				  	</div>
 				</div>	
 			</td>
@@ -76,7 +79,7 @@
 		 
 		<div class="ui divider"></div>
 		 
-		<c:if test="${not empty reservationForm.reservationRow}">
+		<c:if test="${not empty reservationForm.rechercheForm.reservationRow}">
 		    <table class="ui six column table">
 		    	<thead>
 					<th>Ville de départ</th>
@@ -88,20 +91,27 @@
 				  </tr>
 				</thead>
 				<tbody>
-		        <c:forEach var="trajet" items="${reservationForm.reservationRow}">
-		            <tr>
-		                <td>${trajet.villeDepart}</td> 
-		                <td>${trajet.villeArrivee}</td> 
-		                <td>${trajet.dateDepart}</td>
-		                <td>${trajet.nbPassager}</td>
-		                <td>${trajet.placesDisponibles}</td>
-		                <td><div class="ui icon button"><i class="arrow circle right icon"></i></div></td>
-		            </tr>
+		        <c:forEach var="trajet" items="${reservationForm.rechercheForm.reservationRow}">
+		            <form:form modelAttribute="reservationForm" action="./reserve_trajet" method='POST'>
+		            	<form:input type="hidden" path="reservationRowForm.id" value="${trajet.trajetId}"/>
+			            <tr>
+			                <td>${trajet.villeDepart}</td> 
+			                <td>${trajet.villeArrivee}</td> 
+			                <td>${trajet.dateDepart}</td>
+			                <td>${trajet.nbPassager}</td>
+			                <td>${trajet.placesDisponibles}</td>
+			                <td>
+			                	<button class="ui icon button" type="submit">
+			                		<i class="arrow circle right icon"></i>
+			                	</button>
+		                	</td>
+			            </tr>
+		            </form:form>
 		        </c:forEach>
 		        </tbody>
 		    </table>
 		</c:if>
-		<c:if test="${empty reservationForm.reservationRow}">
+		<c:if test="${empty reservationForm.rechercheForm.reservationRow}">
 			Aucune transaction trouvée
 		</c:if>
 		 <!-- 

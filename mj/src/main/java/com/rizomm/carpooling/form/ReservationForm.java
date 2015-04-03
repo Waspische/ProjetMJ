@@ -1,67 +1,27 @@
 package com.rizomm.carpooling.form;
 
-import java.util.List;
-
-import org.hibernate.validator.constraints.Length;
-
-import com.rizomm.carpooling.model.ReservationRow;
-import com.rizomm.carpooling.model.Trajet;
 
 public class ReservationForm {
 
+	private RechercheForm rechercheForm;
+	private ReservationRowForm reservationRowForm;
 	
-	@Length(max=100)
-	private String pointDepart;
+	public ReservationForm() {
+		rechercheForm = new RechercheForm();
+		reservationRowForm = new ReservationRowForm();
+	}
 	
-	@Length(max=100)
-	private String pointArrivee;
-	
-	@Length(max=16)
-	private String dateDepart;
-	
-	private List<ReservationRow> reservationRow;
-	
-	private Boolean placesDispo;
-
-	public String getPointDepart() {
-		return pointDepart;
+	public RechercheForm getRechercheForm() {
+		return rechercheForm;
 	}
-
-	public void setPointDepart(String pointDepart) {
-		this.pointDepart = pointDepart;
+	public void setRechercheForm(RechercheForm rechercheForm) {
+		this.rechercheForm = rechercheForm;
 	}
-
-	public String getPointArrivee() {
-		return pointArrivee;
+	public ReservationRowForm getReservationRowForm() {
+		return reservationRowForm;
 	}
-
-	public void setPointArrivee(String pointArrivee) {
-		this.pointArrivee = pointArrivee;
+	public void setReservationRowForm(ReservationRowForm reservationRowForm) {
+		this.reservationRowForm = reservationRowForm;
 	}
-
-	public String getDateDepart() {
-		return dateDepart;
-	}
-
-	public void setDateDepart(String dateDepart) {
-		this.dateDepart = dateDepart;
-	}
-
-	public Boolean getPlacesDispo() {
-		return placesDispo;
-	}
-
-	public void setPlacesDispo(Boolean placesDispo) {
-		this.placesDispo = placesDispo;
-	}
-
-	public List<ReservationRow> getReservationRow() {
-		return reservationRow;
-	}
-
-	public void setReservationRow(List<ReservationRow> reservationRow) {
-		this.reservationRow = reservationRow;
-	}
-
 	
 }

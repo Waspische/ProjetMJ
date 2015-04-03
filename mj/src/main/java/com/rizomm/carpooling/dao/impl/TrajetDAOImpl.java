@@ -65,16 +65,16 @@ public class TrajetDAOImpl implements TrajetDAO {
 	public List<Trajet> getTrajetsAvecParametres(ReservationForm reservationForm) {
 		List<Trajet> list = new ArrayList<Trajet>();
 		String query = "select t from Trajet t where 1=1";
-		if(reservationForm.getPointDepart()!="")
-			query = query + " and t.idVilleDepart="+villeService.getVilleByLibelle(reservationForm.getPointDepart()).getId();
-		if(reservationForm.getPointArrivee()!="")
-			query = query + " and t.idVilleArrivee="+villeService.getVilleByLibelle(reservationForm.getPointArrivee()).getId();
-		if(reservationForm.getDateDepart()!="")
+		if(reservationForm.getRechercheForm().getPointDepart()!="")
+			query = query + " and t.idVilleDepart="+villeService.getVilleByLibelle(reservationForm.getRechercheForm().getPointDepart()).getId();
+		if(reservationForm.getRechercheForm().getPointArrivee()!="")
+			query = query + " and t.idVilleArrivee="+villeService.getVilleByLibelle(reservationForm.getRechercheForm().getPointArrivee()).getId();
+		if(reservationForm.getRechercheForm().getDateDepart()!="")
 		{
 			try {
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 				SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date startDate = formatter.parse(reservationForm.getDateDepart());
+				Date startDate = formatter.parse(reservationForm.getRechercheForm().getDateDepart());
 				String startDateStr = formatter2.format(startDate);
 				Calendar c = Calendar.getInstance(); 
 				c.setTime(startDate); 

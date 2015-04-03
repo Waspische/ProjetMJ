@@ -22,7 +22,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	@Transactional
-	public Utilisateur getUtilisateurByLogin(Utilisateur utilisateur) {
+	public Utilisateur getUtilisateurByLogin(String utilisateur) {
 		return utilisateurDAO.getUtilisateurByLogin(utilisateur);
 	}
 }

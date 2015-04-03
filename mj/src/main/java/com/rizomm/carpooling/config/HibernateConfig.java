@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.rizomm.carpooling.model.ReservationRow;
 import com.rizomm.carpooling.model.Trajet;
 import com.rizomm.carpooling.model.TypeVoiture;
 import com.rizomm.carpooling.model.Utilisateur;
@@ -49,6 +50,7 @@ public class HibernateConfig {
 		sessionBuilder.addAnnotatedClasses(TypeVoiture.class);
 		sessionBuilder.addAnnotatedClasses(Ville.class);
 		sessionBuilder.addAnnotatedClasses(Trajet.class);
+		sessionBuilder.addAnnotatedClasses(ReservationRow.class);
 		return sessionBuilder.buildSessionFactory();
 	}
 

@@ -2,13 +2,15 @@ package com.rizomm.carpooling.model;
 
 public class ReservationRow {
 	
+	private int trajetId;
 	private String villeDepart;
 	private String villeArrivee;
 	private String dateDepart;	
 	private int nbPassager;
 	private int placesDisponibles;
 	
-	public ReservationRow(String villeDepart, String villeArrivee, String dateDepart, int nbPassager, int placesDisponibles){
+	public ReservationRow(int trajetId, String villeDepart, String villeArrivee, String dateDepart, int nbPassager, int placesDisponibles){
+		this.trajetId = trajetId;
 		this.villeArrivee = villeArrivee;
 		this.villeDepart = villeDepart;
 		this.dateDepart = dateDepart;
@@ -16,6 +18,12 @@ public class ReservationRow {
 		this.placesDisponibles = placesDisponibles;
 	}
 	
+	public int getTrajetId() {
+		return trajetId;
+	}
+	public void setTrajetId(int trajetId) {
+		this.trajetId = trajetId;
+	}
 	public String getVilleDepart() {
 		return villeDepart;
 	}

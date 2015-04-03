@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.rizomm.carpooling.form.ReservationForm;
+import com.rizomm.carpooling.form.ReservationRowForm;
 import com.rizomm.carpooling.form.TrajetForm;
 import com.rizomm.carpooling.model.ReservationRow;
 import com.rizomm.carpooling.model.Trajet;
 import com.rizomm.carpooling.service.TrajetService;
 import com.rizomm.carpooling.service.TypeVoitureService;
+import com.rizomm.carpooling.service.UtilisateurService;
 import com.rizomm.carpooling.service.VilleService;
 import com.rizomm.carpooling.validator.ReservationValidator;
 import com.rizomm.carpooling.validator.TrajetValidator;
@@ -40,6 +42,8 @@ public class TrajetController {
 	private VilleService villeService;
 	@Autowired
 	private TypeVoitureService typeVoitureService;
+	@Autowired
+	private UtilisateurService utilisateurService;
 	@Autowired
 	private TrajetValidator trajetValidator;
 	@Autowired
@@ -73,13 +77,14 @@ public class TrajetController {
  
 	  ModelAndView model = new ModelAndView();
 	  model.setViewName("/views/nouveau_trajet");
+	  UserDetails userDetail = null;
 	  
 	  trajetValidator.validate(trajetForm, result);
 	  
 	  //check if user is login
 	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	  if (!(auth instanceof AnonymousAuthenticationToken)) {
-		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
+		userDetail = (UserDetails) auth.getPrincipal();	
 		model.addObject("username", userDetail.getUsername());
 	  }
 	  
@@ -94,6 +99,7 @@ public class TrajetController {
 			  return model;
 		  }
 		  tra.setId(trajetService.getMaxId()+1);
+		  tra.setConducteur(utilisateurService.getUtilisateurByLogin(userDetail.getUsername()).getId());
 		  tra.setIdTypeVoiture(typeVoitureService.getTypeVoitureByLibelle(trajetForm.getTypeVoiture()).getId());
 		  tra.setIdVilleArrivee(villeService.getVilleByLibelle(trajetForm.getPointArrivee()).getId());
 		  tra.setIdVilleDepart(villeService.getVilleByLibelle(trajetForm.getPointDepart()).getId());
@@ -133,22 +139,31 @@ public class TrajetController {
 	}
 	
 	@RequestMapping(value = {"/views/rejoindre_trajet"}, method = RequestMethod.GET)
-	public ModelAndView rejoindre_trajet() {
+	public ModelAndView rejoindre_trajet(@RequestParam(value = "error", required = false) String error,
+				@RequestParam(value = "create", required = false) String create) {
  
 	  ModelAndView model = new ModelAndView();
-	  ReservationForm reservationForm = new ReservationForm();	  
+	  ReservationForm reservationForm = new ReservationForm();	 
 	  List<ReservationRow> list = new ArrayList<ReservationRow>();
 	  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 	  
+	  if (error != null) {
+		model.addObject("error", error);
+	  }
+	  if (create != null) {
+		model.addObject("create", create);
+	  }
+	  
 	  for(Trajet tra : trajetService.getTousLesTrajets())
 	  {
-		  list.add(new ReservationRow(villeService.getVilleById(tra.getIdVilleDepart()).getLibelle(),
+		  list.add(new ReservationRow(tra.getId(),
+				  					villeService.getVilleById(tra.getIdVilleDepart()).getLibelle(),
 				  					villeService.getVilleById(tra.getIdVilleArrivee()).getLibelle(),
 				  					formatter.format(tra.getDateCreation()),
 				  					tra.getNbPassager(),
 				  					tra.getNbPassager()));
 	  }
-	  reservationForm.setReservationRow(list);
+	  reservationForm.getRechercheForm().setReservationRow(list);
 	  
 	  //check if user is login
 	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -183,13 +198,14 @@ public class TrajetController {
 		  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		  for(Trajet tra : trajetService.getTrajetsAvecParametres(reservationForm))
 		  {
-			  list.add(new ReservationRow(villeService.getVilleById(tra.getIdVilleDepart()).getLibelle(),
+			  list.add(new ReservationRow(tra.getId(),
+					  					villeService.getVilleById(tra.getIdVilleDepart()).getLibelle(),
 					  					villeService.getVilleById(tra.getIdVilleArrivee()).getLibelle(),
 					  					formatter.format(tra.getDateCreation()),
 					  					tra.getNbPassager(),
 					  					tra.getNbPassager()));
 		  }
-		  reservationForm.setReservationRow(list);
+		  reservationForm.getRechercheForm().setReservationRow(list);
 	  }
 	  else
 	  {
@@ -207,6 +223,41 @@ public class TrajetController {
 		  model.addObject("error", str.toString());
 	  }
  
+	  return model;
+	}
+	
+	@RequestMapping(value = {"/views/reserve_trajet"}, method = RequestMethod.POST)
+	public ModelAndView reserve_trajet(@ModelAttribute ReservationForm reservationForm, BindingResult result) {
+ 
+	  ModelAndView model = new ModelAndView();
+	  model.setViewName("redirect:/views/rejoindre_trajet");
+	  
+	  //check if user is login
+	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	  if (!(auth instanceof AnonymousAuthenticationToken)) {
+		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
+		model.addObject("username", userDetail.getUsername());
+	  }
+	  
+	  if (!result.hasErrors()) {
+		  model.addObject("create", "La réservation a été prise en compte pour le trajet "+reservationForm.getReservationRowForm().getId()+" !");
+	  }
+	  else
+	  {
+		  StringBuffer str = new StringBuffer();
+		  str.append("Erreur(s) dans le formulaire :"); 
+		  for(FieldError err : result.getFieldErrors())
+		  {
+			  str.append("<br/>");
+			  str.append(" - le champ "+err.getField()+" ");
+			  if(err.getDefaultMessage()==null)
+				  str.append(err.getCodes()[3]);
+			  else
+				  str.append(": "+err.getDefaultMessage());
+		  }
+		  model.addObject("error", str.toString());
+	  }
+	  
 	  return model;
 	}
 	

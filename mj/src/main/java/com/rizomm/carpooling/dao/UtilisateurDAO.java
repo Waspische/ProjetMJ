@@ -5,5 +5,5 @@ import com.rizomm.carpooling.model.Utilisateur;
 
 public interface UtilisateurDAO {
 	public Utilisateur save(Utilisateur utilisateur);
-	public Utilisateur getUtilisateurByLogin(Utilisateur utilisateur);
+	public Utilisateur getUtilisateurByLogin(String utilisateur);
 }
