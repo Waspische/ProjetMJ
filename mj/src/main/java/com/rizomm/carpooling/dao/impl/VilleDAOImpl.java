@@ -31,4 +31,14 @@ public class VilleDAOImpl implements VilleDAO {
 		else
 			return null;
 	}
+
+	@Override
+	public Ville getVilleById(int id) {
+		Query query = sessionFactory.getCurrentSession().getNamedQuery("VilleById");
+		query.setInteger("id", id);
+		if(query.list().size()>0)
+			return (Ville) query.list().get(0);
+		else
+			return null;
+	}
 }

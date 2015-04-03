@@ -30,15 +30,15 @@
 			<div class="msg">${create}</div>
 		 </c:if>
      
-		 <form class="ui form" action="<c:url value='/views/nouveau_trajet'/>">
+		 <form class="ui form" action="<c:url value='/views/nouveau_trajet'/>" style="margin-top:30px">
 		 <div id="top">
 			 <button class="ui purple button" type="submit">Creer un trajet</button>
 	     </div>
 	     </form>
 	     <br/>
-	     <form class="ui form">
+	     <form class="ui form" action="<c:url value='/views/rejoindre_trajet'/>">
 		 <div id="bot">
-			 <button class="ui teal button">Rejoindre un trajet</button>
+			 <button class="ui teal button"  type="submit">Rejoindre un trajet</button>
 		 </div>
 		 </form>
 	 </div>

@@ -11,9 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
-
 @Entity
 @Table(name = "trajet")
 public class Trajet implements java.io.Serializable {
@@ -33,7 +30,7 @@ public class Trajet implements java.io.Serializable {
 
 	public Trajet(int id, int conducteur, int nbPassager, int nbEtape,
 			Date dateCreation, int idVilleDepart, int idVilleArrivee,
-			int idTypeVehicule) {
+			int idTypeVoiture) {
 		this.id = id;
 		this.conducteur = conducteur;
 		this.nbPassager = nbPassager;
@@ -81,8 +78,8 @@ public class Trajet implements java.io.Serializable {
 		this.nbEtape = nbEtape;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_creation", nullable = false, length = 10)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date_creation", nullable = false, length = 16)
 	public Date getDateCreation() {
 		return this.dateCreation;
 	}

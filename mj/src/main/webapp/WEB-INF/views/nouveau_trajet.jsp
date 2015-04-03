@@ -53,7 +53,7 @@
 		   	<div class="required field">
 			  	<label>Date de depart</label>
 			  	<div class="ui icon input">
-					<form:input type="text" placeholder="DD/MM/YYYY" path="dateDepart"/>
+					<form:input type="text" placeholder="DD/MM/YYYY hh:mm" path="dateDepart"/>
 			  	</div>
 			</div>	
 		   	<div class="required field">

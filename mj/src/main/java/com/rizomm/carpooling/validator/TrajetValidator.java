@@ -61,7 +61,7 @@ public class TrajetValidator implements Validator {
 	    }
 		
 		//Format date
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		try {
 			formatter.parse(trajetForm.getDateDepart());
 		} catch(Exception ex) {

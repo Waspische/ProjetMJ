@@ -18,5 +18,11 @@ public class VilleServiceImpl implements VilleService {
 	@Transactional
 	public Ville getVilleByLibelle(String libelle) {
 		return villeDAO.getVilleByLibelle(libelle);
+	}
+
+	@Override
+	@Transactional
+	public Ville getVilleById(int id) {
+		return villeDAO.getVilleById(id);
 	}	
 }

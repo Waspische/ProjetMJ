@@ -1,44 +1,27 @@
 package com.rizomm.carpooling.form;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
-public class TrajetForm {
+import com.rizomm.carpooling.model.ReservationRow;
+import com.rizomm.carpooling.model.Trajet;
 
-	@NotEmpty
-	@NotNull
-	@Length(max=100)
-	private String typeVoiture;
+public class ReservationForm {
+
 	
-	@NotEmpty
-	@NotNull
 	@Length(max=100)
 	private String pointDepart;
 	
-	@NotEmpty
-	@NotNull
 	@Length(max=100)
 	private String pointArrivee;
 	
-	@NotEmpty
-	@NotNull
 	@Length(max=16)
 	private String dateDepart;
 	
-	@NotEmpty
-	@NotNull
-	@Length(max=11)
-	private String nbPassager;
-
-	public String getTypeVoiture() {
-		return typeVoiture;
-	}
-
-	public void setTypeVoiture(String typeVoiture) {
-		this.typeVoiture = typeVoiture;
-	}
+	private List<ReservationRow> reservationRow;
+	
+	private Boolean placesDispo;
 
 	public String getPointDepart() {
 		return pointDepart;
@@ -64,15 +47,21 @@ public class TrajetForm {
 		this.dateDepart = dateDepart;
 	}
 
-	public String getNbPassager() {
-		return nbPassager;
+	public Boolean getPlacesDispo() {
+		return placesDispo;
 	}
 
-	public void setNbPassager(String nbPassager) {
-		this.nbPassager = nbPassager;
+	public void setPlacesDispo(Boolean placesDispo) {
+		this.placesDispo = placesDispo;
 	}
-	
-	
-	
+
+	public List<ReservationRow> getReservationRow() {
+		return reservationRow;
+	}
+
+	public void setReservationRow(List<ReservationRow> reservationRow) {
+		this.reservationRow = reservationRow;
+	}
+
 	
 }

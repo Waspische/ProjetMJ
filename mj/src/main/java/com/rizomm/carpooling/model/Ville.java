@@ -11,7 +11,8 @@ import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
 @NamedQueries({
-	@NamedQuery(name = "VilleByLibelle", query = "from Ville v where upper(v.libelle) = upper(:libelle)")
+	@NamedQuery(name = "VilleByLibelle", query = "from Ville v where upper(v.libelle) = upper(:libelle)"),
+	@NamedQuery(name = "VilleById", query = "from Ville v where v.id = :id")
 })
 @Entity
 @Table(name = "ville")
@@ -22,7 +23,8 @@ public class Ville implements java.io.Serializable {
 	private int idPays;
 	private String codePostal;
 	private String libelle;
-
+	
+	
 	public Ville() {
 	}
 
