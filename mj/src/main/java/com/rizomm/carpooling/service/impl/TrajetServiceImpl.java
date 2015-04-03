@@ -39,5 +39,11 @@ public class TrajetServiceImpl implements TrajetService {
 	@Transactional 
 	public List<Trajet> getTrajetsAvecParametres(ReservationForm reservationForm) {
 		return trajetDAO.getTrajetsAvecParametres(reservationForm);
+	}
+
+	@Override
+	@Transactional 
+	public Trajet getTrajetById(int id) {
+		return trajetDAO.getTrajetById(id);
 	}	
 }

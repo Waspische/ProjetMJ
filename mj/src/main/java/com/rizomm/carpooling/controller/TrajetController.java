@@ -22,10 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.rizomm.carpooling.form.ReservationForm;
-import com.rizomm.carpooling.form.ReservationRowForm;
 import com.rizomm.carpooling.form.TrajetForm;
+import com.rizomm.carpooling.model.Passager;
 import com.rizomm.carpooling.model.ReservationRow;
 import com.rizomm.carpooling.model.Trajet;
+import com.rizomm.carpooling.service.PassagerService;
 import com.rizomm.carpooling.service.TrajetService;
 import com.rizomm.carpooling.service.TypeVoitureService;
 import com.rizomm.carpooling.service.UtilisateurService;
@@ -44,6 +45,9 @@ public class TrajetController {
 	private TypeVoitureService typeVoitureService;
 	@Autowired
 	private UtilisateurService utilisateurService;
+	@Autowired
+	private PassagerService passagerService;
+	
 	@Autowired
 	private TrajetValidator trajetValidator;
 	@Autowired
@@ -161,7 +165,7 @@ public class TrajetController {
 				  					villeService.getVilleById(tra.getIdVilleArrivee()).getLibelle(),
 				  					formatter.format(tra.getDateCreation()),
 				  					tra.getNbPassager(),
-				  					tra.getNbPassager()));
+				  					tra.getNbPassager()-(passagerService.getPassagerByTrajet(tra)).size()));
 	  }
 	  reservationForm.getRechercheForm().setReservationRow(list);
 	  
@@ -203,7 +207,7 @@ public class TrajetController {
 					  					villeService.getVilleById(tra.getIdVilleArrivee()).getLibelle(),
 					  					formatter.format(tra.getDateCreation()),
 					  					tra.getNbPassager(),
-					  					tra.getNbPassager()));
+					  					tra.getNbPassager()-(passagerService.getPassagerByTrajet(tra)).size()));
 		  }
 		  reservationForm.getRechercheForm().setReservationRow(list);
 	  }
@@ -229,18 +233,51 @@ public class TrajetController {
 	@RequestMapping(value = {"/views/reserve_trajet"}, method = RequestMethod.POST)
 	public ModelAndView reserve_trajet(@ModelAttribute ReservationForm reservationForm, BindingResult result) {
  
+	  UserDetails userDetail = null;
 	  ModelAndView model = new ModelAndView();
 	  model.setViewName("redirect:/views/rejoindre_trajet");
 	  
 	  //check if user is login
 	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	  if (!(auth instanceof AnonymousAuthenticationToken)) {
-		UserDetails userDetail = (UserDetails) auth.getPrincipal();	
+		userDetail = (UserDetails) auth.getPrincipal();	
 		model.addObject("username", userDetail.getUsername());
 	  }
 	  
 	  if (!result.hasErrors()) {
-		  model.addObject("create", "La réservation a été prise en compte pour le trajet "+reservationForm.getReservationRowForm().getId()+" !");
+		  
+		  if(utilisateurService.getUtilisateurByLogin(userDetail.getUsername()).getId()
+				  !=trajetService.getTrajetById(reservationForm.getReservationRowForm().getId()).getConducteur())
+		  {
+			  
+			  for(Passager p : passagerService.getPassagerByTrajet(trajetService.getTrajetById(reservationForm.getReservationRowForm().getId())))
+			  {
+				  if(p.getIdUtilisateur()==utilisateurService.getUtilisateurByLogin(userDetail.getUsername()).getId())
+				  {
+					  model.addObject("error", "Vous avez déjà réservé ce trajet !");
+					  return model;
+				  }
+			  }
+			  
+			  Passager pas = new Passager(passagerService.getMaxId()+1,
+					  utilisateurService.getUtilisateurByLogin(userDetail.getUsername()).getId(),
+					  0,reservationForm.getReservationRowForm().getId());
+			  
+			  if(passagerService.savePassager(pas)!=null)
+			  {
+				  model.addObject("create", "La réservation a été prise en compte !");
+			  }
+			  else
+			  {
+				  model.addObject("error", "Erreur lors de la réservation du trajet !");
+				  return model;
+			  }
+		  }
+		  else
+		  {
+			  model.addObject("error", "Vous ne pouvez réserver un trajet dont vous êtes le conducteur !"); 
+		  }
+		 
 	  }
 	  else
 	  {

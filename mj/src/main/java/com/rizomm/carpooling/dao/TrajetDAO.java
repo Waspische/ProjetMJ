@@ -11,4 +11,5 @@ public interface TrajetDAO {
 	public int getMaxId();
 	public List<Trajet> getTousLesTrajets();
 	public List<Trajet> getTrajetsAvecParametres(ReservationForm reservationForm);
+	public Trajet getTrajetById(int id);
 }

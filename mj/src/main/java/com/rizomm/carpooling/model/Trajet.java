@@ -11,6 +11,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name = "TrajetById", query = "from Trajet t where t.id = :id")
+})
 @Entity
 @Table(name = "trajet")
 public class Trajet implements java.io.Serializable {

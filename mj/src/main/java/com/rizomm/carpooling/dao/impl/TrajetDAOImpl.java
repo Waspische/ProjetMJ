@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Repository;
 import com.rizomm.carpooling.dao.TrajetDAO;
 import com.rizomm.carpooling.form.ReservationForm;
 import com.rizomm.carpooling.model.Trajet;
+import com.rizomm.carpooling.model.Utilisateur;
+import com.rizomm.carpooling.service.PassagerService;
 import com.rizomm.carpooling.service.VilleService;
 
 @Repository("trajetDAO")
@@ -26,6 +29,9 @@ public class TrajetDAOImpl implements TrajetDAO {
 	
 	@Autowired
 	private VilleService villeService;
+	
+	@Autowired
+	private PassagerService passagerService;
 	
 	public TrajetDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -87,10 +93,29 @@ public class TrajetDAOImpl implements TrajetDAO {
 			}
 		}
 		
-		for(Object t : sessionFactory.getCurrentSession().createQuery(query).list())
+		for(Trajet t : (List<Trajet>)sessionFactory.getCurrentSession().createQuery(query).list())
 		{
-			list.add((Trajet)t);
+			if(reservationForm.getRechercheForm().getPlacesDispo())
+			{
+				if(passagerService.getPassagerByTrajet(t).size()<t.getNbPassager())
+					list.add(t);
+			}
+			else
+			{
+				list.add(t);
+			}
+			
 		}
 		return list;
+	}
+
+	@Override
+	public Trajet getTrajetById(int id) {
+		Query query = sessionFactory.getCurrentSession().getNamedQuery("TrajetById");
+		query.setInteger("id", id);
+		if(query.list().size()>0)
+			return (Trajet) query.list().get(0);
+		else
+			return null;
 	}
 }
